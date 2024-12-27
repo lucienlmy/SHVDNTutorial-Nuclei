@@ -43,8 +43,8 @@ public abstract class MenuBase : NativeMenu
     private void InitializeMenu()
     {
         SubtitleFont = Font.Pricedown;
-        Banner.Color = Color.Black;
-        MaxItems = 12;
+        Banner.Color = Color.Gold;
+        MaxItems = 20;
         AddButtons();
 
         Shown += OnShown;
@@ -71,7 +71,8 @@ public abstract class MenuBase : NativeMenu
 
     protected virtual void AddButtons()
     {
-        var instructionalButtonHotKey = new InstructionalButton("Change Hotkeys", Control.ReplayStartStopRecording);
+        //原始 var instructionalButtonHotKey = new InstructionalButton("Change Hotkeys", Control.ReplayStartStopRecording);
+        var instructionalButtonHotKey = new InstructionalButton("Change Hotkeys", Control.Sprint);
         Buttons.Add(instructionalButtonHotKey);
     }
 
