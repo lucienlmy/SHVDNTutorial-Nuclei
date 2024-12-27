@@ -42,7 +42,7 @@ public abstract class MenuBase : NativeMenu
 
     private void InitializeMenu()
     {
-        SubtitleFont = Font.Pricedown;
+        NameFont = Font.Pricedown;
         Banner.Color = Color.Gold;
         MaxItems = 20;
         AddButtons();
@@ -53,7 +53,7 @@ public abstract class MenuBase : NativeMenu
         _exceptionService.ErrorOccurred += OnErrorOccurred;
 
         // Check if the menu with the same subtitle is already in the Pool
-        var existingMenu = Pool.OfType<MenuBase>().FirstOrDefault(menu => menu.Subtitle == Subtitle);
+        var existingMenu = Pool.OfType<MenuBase>().FirstOrDefault(menu => menu.Name == Name);
 
         if (existingMenu == null)
         {
@@ -64,7 +64,7 @@ public abstract class MenuBase : NativeMenu
         {
             // If the menu already exists, remove the current instance and use the existing one
             Pool.Remove(this);
-            Subtitle = existingMenu.Subtitle;
+            Name = existingMenu.Name;
             Description = existingMenu.Description;
         }
     }
@@ -203,12 +203,12 @@ public abstract class MenuBase : NativeMenu
 
     protected NativeSubmenuItem AddMenu(MenuBase subMenu)
     {
-        if (_subMenus.ContainsKey(subMenu.Subtitle))
+        if (_subMenus.ContainsKey(subMenu.Name))
             // If the submenu already exists, get a reference to it
-            subMenu = _subMenus[subMenu.Subtitle];
+            subMenu = _subMenus[subMenu.Name];
         else
             // If the submenu does not exist, add it to the dictionary
-            _subMenus.Add(subMenu.Subtitle, subMenu);
+            _subMenus.Add(subMenu.Name, subMenu);
 
         var submenuItem = AddSubMenu(subMenu);
         submenuItem.AltTitle = "Menu";
@@ -245,7 +245,7 @@ public abstract class MenuBase : NativeMenu
     protected NativeMenu NavigateToMenu(string subTitle)
     {
         var allMenusInPool = Pool.Where(menu => menu is NativeMenu).Cast<NativeMenu>().ToList();
-        var menu = allMenusInPool.FirstOrDefault(menu => menu.Subtitle == subTitle);
+        var menu = allMenusInPool.FirstOrDefault(menu => menu.Name == Name);
         if (menu != null)
         {
             Visible = false;
